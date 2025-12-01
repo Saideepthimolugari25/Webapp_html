@@ -29,11 +29,6 @@ pipeline {
                 echo "Testing app..."
             }
         }
-        stage('Archive') {
-            steps {
-                archiveArtifacts artifacts: '/*.index.html', fingerprint: true
-            }
-        }
     }
 }
 
