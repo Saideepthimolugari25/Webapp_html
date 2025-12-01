@@ -34,5 +34,6 @@ pipeline {
                 archiveArtifacts artifacts: '/*.index.html', fingerprint: true
             }
         }
-
+    }
+}
 
