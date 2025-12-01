@@ -1,22 +1,46 @@
-pipeline{
+pipeline {
     agent any
-    triggers{
-        pollSCM('* * * *')
+
+    triggers {
+        pollSCM('* * * * *')
     }
-    stages{
-        stage('Build'){
-            steps{
-                echo 'Building..'
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
         }
-        stage('Test'){
-            steps{
-                echo 'Testing..'
+
+        stage('Build') {
+            steps {
+                    - echo "Building app..."
             }
         }
-        stage('Deploy'){
-            steps{
-                echo 'Deploying....'
+
+        stage('Run') {
+            steps {
+                echo "Running app..."
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing app..."
+            }
+        }
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: '/*.index.html', fingerprint: true
+            }
+        }
+
+        post{
+            SUCCESS{
+                echo "Pipeline completed successfully."
+            }
+            FAILURE{
+                echo "Pipeline failed. Please check the logs."
             }
         }
     }
